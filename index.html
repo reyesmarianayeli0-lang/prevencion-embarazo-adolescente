@@ -1,0 +1,1102 @@
+<!-- ==============================================================
+    PROPÓSITO: Página web informativa sobre prevención del embarazo
+    adolescente, creada por el Grupo 503 del CECYTEM.
+    Incluye: definiciones, causas, consecuencias, métodos anticonceptivos,
+    campaña, mitos, centros de salud, galería y chat interactivo.
+    ============================================================== -->
+
+<!DOCTYPE html>
+<!-- Indica que el documento sigue la versión actual de HTML -->
+<html lang="es">
+<!-- "lang='es'" = El contenido está en español -->
+
+<head>
+    <!-- ==========================================================
+        SECCIÓN DE CONFIGURACIÓN Y ESTILOS
+        Aquí se define cómo se VE la página, no su contenido visible
+        ========================================================== -->
+    
+    <meta charset="UTF-8">
+    <!-- Define la codificación de caracteres → permite usar tildes, ñ, símbolos -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Hace que la página se adapte al tamaño de la pantalla (celular, tablet, computadora) -->
+    
+    <title>Prevención del Embarazo — Grupo 503 | CECYTEM</title>
+    <!-- Título que aparece en la pestaña del navegador -->
+    
+    <style>
+        /* ======================================================
+           ESTILOS GENERALES: Aplican a TODA la página
+           ====================================================== */
+        * {
+            margin: 0;              /* Quita espacios externos por defecto */
+            padding: 0;             /* Quita espacios internos por defecto */
+            box-sizing: border-box; /* Los bordes no aumentan el tamaño de los elementos */
+            font-family: 'Segoe UI', Arial, sans-serif; /* Fuente de letra principal */
+        }
+
+        /* Paleta de colores → se usa en toda la página cambiando solo el nombre */
+        :root {
+            --verde-oscuro: #006633;   /* Verde institucional CECYTEM */
+            --verde-medio: #00994C;
+            --verde-claro: #99CC99;
+            --verde-palido: #E6F4EA;
+            --fondo: #F0F9F2;          /* Color de fondo de la página */
+            --blanco: #FFFFFF;
+            --texto: #1F3D2F;          /* Color de las letras */
+            --sombra: rgba(0, 102, 51, 0.12);
+        }
+
+        body {
+            background-color: var(--fondo);  /* Fondo general */
+            color: var(--texto);            /* Color de texto general */
+            line-height: 1.7;               /* Espaciado entre líneas */
+        }
+
+        /* ======================================================
+           ENCABEZADO: Logo + Título del proyecto
+           ====================================================== */
+        .cabecera {
+            background: linear-gradient(135deg, var(--verde-oscuro), var(--verde-medio));
+            /* Degradado de verde oscuro a verde medio */
+            color: var(--blanco);
+            padding: 2rem 1.5rem;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.18); /* Sombra debajo del encabezado */
+        }
+
+        .contenedor-cabecera {
+            max-width: 1200px;   /* Ancho máximo */
+            margin: 0 auto;      /* Centra el contenido */
+            display: flex;       /* Coloca elementos uno al lado del otro */
+            align-items: center; /* Alinea verticalmente al centro */
+            justify-content: center;
+            gap: 1.5rem;         /* Espacio entre logo y texto */
+            flex-wrap: wrap;     /* Si no caben, pasan a la línea siguiente */
+            text-align: center;
+        }
+
+        .logo-cecytem {
+            width: 120px;
+            height: 120px;
+            background-color: rgba(255,255,255,0.25); /* Fondo semitransparente */
+            border-radius: 50%;                       /* Forma circular */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5rem;
+            border: 3px solid rgba(255,255,255,0.4);
+        }
+
+        .logo-cecytem img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Ajusta la imagen sin recortarla ni deformarla */
+            border-radius: 50%;
+        }
+
+        .texto-cabecera h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .subtitulo {
+            font-size: 1.1rem;
+            opacity: 0.92; /* Ligera transparencia */
+        }
+
+        /* ======================================================
+           MENÚ DE NAVEGACIÓN: Enlaces a cada sección
+           ====================================================== */
+        .menu-principal {
+            background-color: var(--verde-oscuro);
+            position: sticky; /* El menú se queda fijo arriba al deslizar */
+            top: 0;
+            z-index: 100;     /* Mantiene el menú por encima de todo lo demás */
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+
+        .menu-principal ul {
+            list-style: none;  /* Quita los puntos de lista */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .menu-principal li a {
+            display: block;
+            padding: 1rem 1.1rem;
+            color: var(--blanco);
+            text-decoration: none; /* Quita el subrayado */
+            font-weight: 500;
+            transition: all 0.3s ease; /* Animación suave al pasar el ratón */
+            border-bottom: 3px solid transparent;
+            font-size: 0.95rem;
+        }
+
+        .menu-principal li a:hover {
+            /* Estilo al pasar el ratón por encima */
+            background-color: var(--verde-medio);
+            border-bottom: 3px solid var(--blanco);
+        }
+
+        /* ======================================================
+           SISTEMA DE PÁGINAS: Una sección visible a la vez
+           ====================================================== */
+        .pagina {
+            display: none; /* Por defecto, TODAS las páginas están ocultas */
+            padding: 2rem 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 75vh; /* Altura mínima = 75% de la pantalla */
+        }
+
+        .pagina.activa {
+            display: block; /* Solo la página con esta clase se muestra */
+            animation: aparecer 0.4s ease; /* Efecto de aparición suave */
+        }
+
+        @keyframes aparecer {
+            from { opacity: 0; transform: translateY(12px); } /* Empieza transparente y abajo */
+            to { opacity: 1; transform: translateY(0); }     /* Termina visible y en su lugar */
+        }
+
+        /* Estilos de títulos y tarjetas */
+        h2 {
+            color: var(--verde-oscuro);
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid var(--verde-claro);
+            padding-bottom: 0.6rem;
+            font-size: 1.6rem;
+        }
+
+        h3 {
+            color: var(--verde-medio);
+            margin: 1.2rem 0 0.7rem;
+            font-size: 1.25rem;
+        }
+
+        h4 {
+            color: var(--verde-oscuro);
+            margin: 1rem 0 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .tarjeta {
+            background: var(--blanco);
+            border-radius: 14px;        /* Bordes redondeados */
+            padding: 1.6rem;
+            margin-bottom: 1.4rem;
+            box-shadow: 0 3px 10px var(--sombra);
+            border-left: 5px solid var(--verde-medio); /* Borde lateral decorativo */
+        }
+
+        .destacado {
+            background-color: var(--verde-palido);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--verde-oscuro);
+            font-weight: 500;
+        }
+
+        ul, ol {
+            margin-left: 1.6rem;
+            margin-top: 0.6rem;
+            margin-bottom: 0.8rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* ======================================================
+           GALERÍA DE DESARROLLADORES: Fotos con imágenes
+           ====================================================== */
+        .contenedor-galeria {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            /* Crea columnas automáticas, mínimo 260px cada una */
+            gap: 1.2rem;
+            margin-top: 1.2rem;
+        }
+
+        .foto-desarrollador {
+            background-color: var(--verde-claro);
+            border-radius: 12px;
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            color: var(--verde-oscuro);
+            font-weight: bold;
+            text-align: center;
+            padding: 0.5rem;
+            border: 2px dashed var(--verde-oscuro);
+            transition: transform 0.3s ease;
+            position: relative; /* Para posicionar la imagen dentro */
+            overflow: hidden;   /* Oculta lo que se salga de los bordes */
+        }
+
+        .foto-desarrollador img {
+            position: absolute; /* Ocupa todo el contenedor */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Recorta y ajusta sin deformar */
+            z-index: 1;       /* Imagen detrás del texto */
+        }
+
+        .foto-desarrollador span {
+            position: relative;
+            z-index: 2;       /* Texto por encima de la imagen */
+            background: rgba(255, 255, 255, 0.75);
+            padding: 6px 12px;
+            border-radius: 8px;
+        }
+
+        /* ======================================================
+           CHATBOT: Caja de preguntas y respuestas
+           ====================================================== */
+        .caja-chat {
+            background: var(--blanco);
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(0,102,51,0.2);
+            overflow: hidden;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .cabecera-chat {
+            background: var(--verde-oscuro);
+            color: white;
+            padding: 1.1rem;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .cuerpo-chat {
+            height: 480px;
+            overflow-y: auto; /* Barra de desplazamiento si hay mucho texto */
+            padding: 1.3rem;
+            background-color: #F8FBF8;
+        }
+
+        .mensaje {
+            margin-bottom: 1.1rem;
+            padding: 0.9rem 1.3rem;
+            border-radius: 20px;
+            max-width: 85%;
+            line-height: 1.6;
+        }
+
+        .mensaje-usuario {
+            background-color: var(--verde-medio);
+            color: white;
+            margin-left: auto; /* Alinea a la derecha */
+        }
+
+        .mensaje-bot {
+            background-color: var(--verde-claro);
+            color: var(--texto);
+            margin-right: auto; /* Alinea a la izquierda */
+        }
+
+        .preguntas-rapidas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            padding: 1.1rem;
+            background: #E8F5E9;
+            border-top: 1px solid var(--verde-claro);
+        }
+
+        .boton-pregunta {
+            background: var(--blanco);
+            border: 2px solid var(--verde-medio);
+            color: var(--verde-oscuro);
+            padding: 0.65rem 1.1rem;
+            border-radius: 22px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .boton-pregunta:hover {
+            background: var(--verde-medio);
+            color: white;
+        }
+
+        /* ======================================================
+           PIE DE PÁGINA
+           ====================================================== */
+        .pie {
+            background: var(--verde-oscuro);
+            color: white;
+            text-align: center;
+            padding: 1.6rem;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ==============================================================
+        ENCABEZADO: Logo + Título
+        ============================================================== -->
+    <header class="cabecera">
+        <div class="contenedor-cabecera">
+            <!-- Logo circular del CECYTEM -->
+            <div class="logo-cecytem">
+                <img src="descarga.webp" alt="Logo CECYTEM">
+            </div>
+            <!-- Título principal -->
+            <div class="texto-cabecera">
+                <h1>Prevención del Embarazo Adolescente</h1>
+                <p class="subtitulo">Grupo 503 💚 | CECYTEM</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==============================================================
+        MENÚ DE NAVEGACIÓN: Enlaces que cambian de página
+        ============================================================== -->
+    <nav class="menu-principal">
+        <ul>
+            <!-- Cada enlace tiene un atributo "data-pagina" que identifica 
+                 qué sección mostrar al hacer clic -->
+            <li><a href="#" data-pagina="inicio">Inicio</a></li>
+            <li><a href="#" data-pagina="quees">¿Qué es?</a></li>
+            <li><a href="#" data-pagina="causas">Causas</a></li>
+            <li><a href="#" data-pagina="consecuencias">Consecuencias</a></li>
+            <li><a href="#" data-pagina="metodos">Métodos Anticonceptivos</a></li>
+            <li><a href="#" data-pagina="campana">Campaña</a></li>
+            <li><a href="#" data-pagina="galeria">Galería</a></li>
+            <li><a href="#" data-pagina="chatbot">Chat</a></li>
+            <li><a href="#" data-pagina="mitos">Mitos y Realidades</a></li>
+            <li><a href="#" data-pagina="centro">Centro de Salud</a></li>
+        </ul>
+    </nav>
+
+    <!-- ==============================================================
+        CONTENIDO PRINCIPAL: Todas las secciones
+        Solo una se muestra a la vez gracias a JavaScript
+        ============================================================== -->
+    <main>
+        
+       <!-- ==================================================
+    PROYECTO: Campaña Prevención Embarazo Adolescente
+    INSTITUCIÓN: CECYTEM | GRUPO: 503
+    FECHA: Octubre 2026
+    DESCRIPCIÓN: Estructura completa del sitio web
+    PALETA PRINCIPAL: Verde institucional #006633
+================================================== -->
+
+<!-- INICIO: Sección de bienvenida y presentación -->
+<section id="inicio" class="pagina activa">
+    <h2>Bienvenidos 💚</h2>
+
+    <!-- Tarjeta: Identificación del proyecto -->
+    <div class="tarjeta">
+        <p><strong>CECYTEM — Grupo 503</strong></p>
+        <p>Este proyecto está dedicado a la <strong>prevención del embarazo en la adolescencia</strong>, con información clara, veraz y diseñada para ti. Aquí encontrarás todo lo que necesitas saber para cuidar tu salud, tomar decisiones informadas y construir el futuro que deseas.</p>
+    </div>
+
+    <!-- Tarjeta destacada: Propósito del proyecto -->
+    <div class="tarjeta destacado">
+        <h3>Nuestro propósito</h3>
+        <p>Romper el silencio, eliminar mitos y brindar herramientas para que cada joven sea protagonista de su propia vida. No estás sol@ 💚</p>
+    </div>
+
+    <!-- Tarjeta: Índice de contenido -->
+    <div class="tarjeta">
+        <h3>Explora nuestro contenido</h3>
+        <ul>
+            <li>Definición y contexto del embarazo adolescente</li>
+            <li>Causas principales y factores de riesgo</li>
+            <li>Consecuencias en la salud, educación y vida cotidiana</li>
+            <li>Guía completa de métodos anticonceptivos</li>
+            <li>Nuestra campaña: mensajes, objetivos y actividades</li>
+            <li>Galería: conoce al equipo del Grupo 503</li>
+            <li>Chat informativo: respuestas a tus dudas en cualquier momento</li>
+        </ul>
+    </div>
+
+    <!-- Bloque: Imágenes del proyecto en cuadrícula adaptable -->
+    <div class="tarjeta">
+        <h3>📷Imágenes</h3>
+        <div class="tarjeta">
+            <h3>📷 Imágenes del proyecto</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                <!-- Imagen 1 -->
+                <div style="border-radius: 10px; overflow: hidden; border: 3px solid #006633;">
+                    <img src="14.webp" alt="Trabajando en el proyecto" style="width: 100%; height: 200px; object-fit: cover;">
+                </div>
+                <!-- Imagen 2 -->
+                <div style="border-radius: 10px; overflow: hidden; border: 3px solid #006633;">
+                    <img src="11.webp" alt="Material de trabajo" style="width: 100%; height: 200px; object-fit: cover;">
+                </div>
+                <!-- Imagen 3 -->
+                <div style="border-radius: 10px; overflow: hidden; border: 3px solid #006633;">
+                    <img src="12.webp" alt="Investigación" style="width: 100%; height: 200px; object-fit: cover;">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- FIN SECCIÓN: INICIO -->
+
+<!-- ==================================================
+    SECCIÓN: ¿QUÉ ES? — Definición y contexto
+================================================== -->
+<section id="quees" class="pagina">
+    <h2>¿Qué es el Embarazo Adolescente?</h2>
+
+    <!-- Tarjeta: Definición oficial OMS -->
+    <div class="tarjeta">
+        <h3>Definición según la OMS</h3>
+        <p>La Organización Mundial de la Salud define el embarazo adolescente como aquel que ocurre en personas con edades comprendidas entre los <strong>10 y los 19 años</strong>. Se divide en dos etapas:</p>
+        <ul>
+            <li><strong>Embarazo temprano:</strong> en menores de 15 años. Es el grupo de mayor riesgo, ya que el cuerpo aún está en pleno desarrollo físico y biológico.</li>
+            <li><strong>Embarazo tardío:</strong> entre los 15 y los 19 años. Aunque el cuerpo está más desarrollado, sigue considerándose de mayor riesgo que en la edad adulta.</li>
+        </ul>
+    </div>
+
+    <!-- Tarjeta destacada: Importancia como salud pública -->
+    <div class="tarjeta destacado">
+        <h3>¿Por qué es un tema de salud pública?</h3>
+        <p>El embarazo adolescente representa uno de los retos más importantes en México y el mundo. No es solo un asunto médico, sino también social, económico y cultural. Cada embarazo en la adolescencia refleja oportunidades perdidas: educación, desarrollo personal y proyectos de vida. Prevenirlo es responsabilidad de todos.</p>
+    </div>
+
+    <!-- Tarjeta: Situación en México -->
+    <div class="tarjeta">
+        <h3>Situación en México</h3>
+        <p>México tiene una de las tasas más altas de embarazo adolescente entre los países de la OCDE. Según datos oficiales:</p>
+        <ul>
+            <li>El embarazo es una de las principales causas de abandono escolar en jóvenes mujeres.</li>
+            <li>En muchas comunidades, la falta de información y servicios de salud cercanos aumenta el riesgo.</li>
+            <li>Las adolescentes que continúan estudiando tienen muchas más probabilidades de romper el ciclo de pobreza.</li>
+        </ul>
+    </div>
+
+    <!-- Tarjeta: Introducción a causas -->
+    <div class="tarjeta">
+        <h3>¿Por qué sucede?</h3>
+        <p>No hay una sola causa. Es una combinación de factores que van desde la falta de educación sexual hasta las condiciones del entorno familiar y social. En las siguientes secciones profundizaremos en cada uno.</p>
+    </div>
+</section>
+<!-- FIN SECCIÓN: ¿QUÉ ES? -->
+
+<!-- ==================================================
+    SECCIÓN: CAUSAS — Factores de riesgo
+================================================== -->
+<section id="causas" class="pagina">
+    <h2>Causas del Embarazo Adolescente</h2>
+
+    <!-- Causa 1: Falta de educación sexual -->
+    <div class="tarjeta">
+        <h3>1. Falta de Educación Sexual Integral</h3>
+        <p>Muchos jóvenes reciben información incompleta, errónea o nula sobre sexualidad, reproducción y métodos de protección. Esto genera confusión, miedo y decisiones tomadas sin conocimiento. La educación sexual no se limita a prevenir embarazos: también enseña sobre el cuerpo, el respeto, el consentimiento y los derechos.</p>
+    </div>
+
+    <!-- Causa 2: Uso incorrecto o nulo de métodos -->
+    <div class="tarjeta">
+        <h3>2. Uso incorrecto o nulo de métodos anticonceptivos</h3>
+        <p>Existe desconocimiento sobre cómo funcionan, dónde conseguirlos y cuáles son los más adecuados. Muchos jóvenes creen mitos que ponen en riesgo la salud. La vergüenza de preguntar en farmacias o centros de salud también impide acceder a protección.</p>
+    </div>
+
+    <!-- Causa 3: Inicio temprano sin protección -->
+    <div class="tarjeta">
+        <h3>3. Inicio temprano de relaciones sexuales sin protección</h3>
+        <p>La edad promedio de inicio de relaciones sexuales en México es cada vez más temprana. Cuando ocurre sin la información ni la protección adecuada, el riesgo de embarazo e infecciones aumenta considerablemente.</p>
+    </div>
+
+    <!-- Causa 4: Presión social y de pareja -->
+    <div class="tarjeta">
+        <h3>4. Presión social y de pareja</h3>
+        <p>Influyen el entorno, las amistades, la influencia de redes sociales y la presión dentro de la relación. En algunos casos, la falta de autonomía para decir "no" o pedir protección determina situaciones de riesgo.</p>
+    </div>
+
+    <!-- Causa 5: Violencia y abuso -->
+    <div class="tarjeta">
+        <h3>5. Violencia y abuso sexual</h3>
+        <p>Una proporción importante de embarazos en menores de 15 años está relacionada con situaciones de violencia o abuso. En estos casos, el embarazo no es decisión de la persona, sino consecuencia de un delito que debe denunciarse.</p>
+    </div>
+
+    <!-- Causa 6: Entorno familiar y cultural -->
+    <div class="tarjeta">
+        <h3>6. Entorno familiar y cultural</h3>
+        <p>Familias donde el tema no se habla, donde la educación sexual se considera "tabú", o donde se normaliza el embarazo joven como única opción de vida. También influyen la pobreza y la falta de acceso a oportunidades educativas y laborales.</p>
+    </div>
+
+    <!-- Resumen destacado -->
+    <div class="tarjeta destacado">
+        <h3>¿Por qué sucede? En resumen</h3>
+        <p>El embarazo adolescente no ocurre "por casualidad". Ocurre cuando falta información, cuando se cierran puertas al diálogo, cuando no hay acceso a servicios y cuando se normaliza la falta de protección. Cambiar esto depende de que todos hablemos claro, sin miedo y sin juzgar.</p>
+    </div>
+</section>
+<!-- FIN SECCIÓN: CAUSAS -->
+
+<!-- ==================================================
+    SECCIÓN: CONSECUENCIAS — Impactos en distintas áreas
+================================================== -->
+<section id="consecuencias" class="pagina">
+    <h2>Consecuencias del Embarazo Adolescente</h2>
+
+    <!-- Área: Salud física -->
+    <div class="tarjeta">
+        <h3>🏥 Para la salud física</h3>
+        <ul>
+            <li><strong>Mayor riesgo de complicaciones:</strong> preclampsia, anemia, parto prematuro, hemorragias.</li>
+            <li><strong>Riesgo para el bebé:</strong> bajo peso al nacer, menor desarrollo, mayor riesgo de enfermedades.</li>
+            <li><strong>Sistema reproductivo aún en desarrollo:</strong> el cuerpo de la adolescente no ha terminado de crecer, lo que dificulta el embarazo y el parto.</li>
+            <li>Mayor riesgo de mortalidad materna e infantil en comparación con mujeres adultas.</li>
+        </ul>
+    </div>
+
+    <!-- Área: Salud emocional y mental -->
+    <div class="tarjeta">
+        <h3>🧠 Para la salud emocional y mental</h3>
+        <ul>
+            <li>Sentimientos de miedo, soledad, incertidumbre y ansiedad.</li>
+            <li>Cambios de humor intensos y depresión posparto.</li>
+            <li>Presión familiar y social que puede generar aislamiento.</li>
+            <li>Interrupción de proyectos personales y sueños postergados.</li>
+        </ul>
+    </div>
+
+    <!-- Área: Educación y futuro -->
+    <div class="tarjeta">
+        <h3>📚 En la educación y futuro</h3>
+        <ul>
+            <li>Es la causa principal de abandono escolar en jóvenes mujeres en México.</li>
+            <li>Menor probabilidad de terminar la preparatoria o ingresar a la universidad.</li>
+            <li>Menos oportunidades laborales y salarios más bajos en la adultez.</li>
+            <li>El ciclo se repite: hijas e hijos de madres adolescentes tienen mayor probabilidad de repetir el patrón si no reciben apoyo.</li>
+        </ul>
+    </div>
+
+    <!-- Área: Economía y vida cotidiana -->
+    <div class="tarjeta">
+        <h3>💰 En la economía y la vida cotidiana</h3>
+        <ul>
+            <li>Carga económica para la familia y la persona joven.</li>
+            <li>Dependencia prolongada de otras personas.</li>
+            <li>Limitación de tiempo y energía para estudiar o trabajar.</li>
+            <li>Impacto en la calidad de vida de toda la familia.</li>
+        </ul>
+    </div>
+
+    <!-- Mensaje de esperanza -->
+    <div class="tarjeta destacado">
+        <h3>💛 Pero no todo está perdido</h3>
+        <p>Si bien las consecuencias son serias, <strong>no definen tu vida</strong>. Existen apoyos, becas, programas de salud y personas dispuestas a ayudar. Muchas jóvenes han salido adelante: han terminado sus estudios, han trabajado y han construido un futuro. El embarazo cambia planes, pero no cancela sueños.</p>
+    </div>
+</section>
+<!-- FIN SECCIÓN: CONSECUENCIAS -->
+
+        <!-- ==================================================
+    SECCIÓN: MÉTODOS ANTICONCEPTIVOS
+    ID: metodos
+    Propósito: Explicar los tipos de métodos anticonceptivos,
+    su uso, efectividad y recomendaciones clave
+================================================== -->
+<section id="metodos" class="pagina">
+    <h2>Métodos Anticonceptivos — Tipos y Ejemplos</h2>
+    
+    <!-- Tarjeta destacada: Introducción general -->
+    <div class="tarjeta destacado">
+        <p>Los métodos anticonceptivos son herramientas que permiten decidir cuándo y si tener hijos. Además, <strong>el condón protege contra infecciones de transmisión sexual (ITS)</strong>. Conócelos y elige el que mejor se adapte a ti.</p>
+    </div>
+
+    <!-- 1. MÉTODOS DE BARRERA: Impiden contacto directo | Únicos contra ITS -->
+    <div class="tarjeta">
+        <h3>🔹 1. Métodos de Barrera</h3>
+        <p>Impiden que el esperma llegue al óvulo. Son los únicos que protegen contra ITS.</p>
+        <ul>
+            <li><strong>Condón masculino:</strong> Se coloca en el pene. Efectividad: ~98% si se usa bien. <em>El único que protege contra embarazo e ITS.</em></li>
+            <li><strong>Condón femenino:</strong> Se introduce en la vagina. Eficacia similar al masculino. Protege contra ITS.</li>
+            <li><strong>Diafragma:</strong> Dispositivo de silicona que cubre el cuello uterino. Se usa con espermicida. Requiere consulta médica.</li>
+        </ul>
+    </div>
+
+    <!-- 2. MÉTODOS HORMONALES: Liberan hormonas para evitar ovulación -->
+    <div class="tarjeta">
+        <h3>🔹 2. Métodos Hormonales</h3>
+        <p>Libera hormonas que impiden la ovulación. No protegen contra ITS.</p>
+        <ul>
+            <li><strong>Píldora anticonceptiva:</strong> Se toma todos los días a la misma hora. Eficacia: +99% si no se olvida ninguna dosis.</li>
+            <li><strong>Inyección:</strong> Mensual o trimestral. Fácil de usar, pero requiere acudir a aplicarla.</li>
+            <li><strong>Parche:</strong> Se pega en la piel y se cambia cada semana.</li>
+            <li><strong>Implante subdérmico:</strong> Varilla pequeña bajo la piel del brazo. Dura de 3 a 5 años. Uno de los más seguros.</li>
+            <li><strong>Anillo vaginal:</strong> Se coloca dentro de la vagina cada mes. Libera hormonas de forma constante.</li>
+        </ul>
+    </div>
+
+    <!-- 3. MÉTODOS INTRAUTERINOS: Dispositivos de larga duración -->
+    <div class="tarjeta">
+        <h3>🔹 3. Métodos Intrauterinos</h3>
+        <p>Dispositivos colocados dentro del útero por un médico. Larga duración.</p>
+        <ul>
+            <li><strong>DIU de cobre:</strong> No tiene hormonas. Dura hasta 10 años. Muy confiable.</li>
+            <li><strong>DIU hormonal:</strong> Libera hormonas localmente. Dura de 3 a 5 años. Puede disminuir cólicos y flujo menstrual.</li>
+        </ul>
+    </div>
+
+    <!-- 4. MÉTODOS DE EMERGENCIA: Solo para situaciones excepcionales -->
+    <div class="tarjeta">
+        <h3>🔹 4. Métodos de Emergencia</h3>
+        <p>Para situaciones excepcionales, NO de uso frecuente.</p>
+        <ul>
+            <li><strong>Píldora del día después:</strong> Se toma tras relación sin protección o fallo del método. Funciona mejor cuanto antes: idealmente en las primeras 24 horas, hasta 72 horas después.</li>
+        </ul>
+    </div>
+
+    <!-- 5. MÉTODOS NATURALES: Menos confiables | No protegen contra ITS -->
+    <div class="tarjeta">
+        <h3>🔹 5. Métodos Naturales y de Planificación</h3>
+        <p><strong>Menos confiables.</strong> No protegen contra ITS.</p>
+        <ul>
+            <li>Calendario menstrual, temperatura basal, observación del moco cervical.</li>
+            <li>Retirar el pene antes de la eyaculación: <strong>NO es seguro</strong> — el líquido preseminal ya contiene espermatozoides.</li>
+            <li>La tasa de fallo es muy alta, especialmente en jóvenes con ciclos irregulares.</li>
+        </ul>
+    </div>
+
+    <!-- Recomendaciones: Buenas prácticas y protección doble -->
+    <div class="tarjeta destacado">
+        <h3>💡 Recomendaciones clave</h3>
+        <ul>
+            <li>✅ Combina <strong>condón + otro método</strong> = doble protección.</li>
+            <li>✅ Acude al centro de salud: la mayoría son <strong>gratuitos</strong>.</li>
+            <li>✅ No tengas vergüenza de preguntar: los profesionales están para ayudarte.</li>
+            <li>✅ Ningún método es 100% seguro excepto la abstinencia. Usar varios aumenta mucho la protección.</li>
+        </ul>
+    </div>
+</section>
+<!-- FIN SECCIÓN: MÉTODOS -->
+
+<!-- ==================================================
+    SECCIÓN: CAMPAÑA
+    ID: campana
+    Propósito: Presentar identidad, misión, visión,
+    objetivos, actividades y mensajes del Grupo 503
+================================================== -->
+<section id="campana" class="pagina">
+    <h2>Campaña de Prevención del Embarazo Adolescente — Grupo 503 💚</h2>
+    
+    <!-- Tarjeta destacada: Frase principal de la campaña -->
+    <div class="tarjeta destacado">
+        <h3>Nuestra Frase</h3>
+        <p style="font-size: 1.4rem; font-style: italic; text-align: center; color: var(--verde-oscuro); margin: 1rem 0;">"Tu futuro es primero, infórmate, cuídate, decide."</p>
+    </div>
+
+    <!-- Misión: Qué hacemos y para qué -->
+    <div class="tarjeta">
+        <h3>🎯 Misión</h3>
+        <p>Informar, orientar y acompañar a las y los jóvenes del CECYTEM para que tomen decisiones libres, responsables e informadas sobre su salud reproductiva. Queremos que nadie se sienta sol@ y que la prevención sea una costumbre, no un tabú.</p>
+    </div>
+
+    <!-- Visión: Meta a futuro -->
+    <div class="tarjeta">
+        <h3>🌟 Visión</h3>
+        <p>Lograr que nuestra comunidad escolar cuente con educación sexual completa, sin miedos ni prejuicios. Que cada joven conozca sus derechos, sepa protegerse y tenga la confianza para preguntar, planear y construir el futuro que merece.</p>
+    </div>
+
+    <!-- Objetivos: Metas específicas de la campaña -->
+    <div class="tarjeta">
+        <h3>📋 Objetivos de la Campaña</h3>
+        <ol>
+            <li><strong>Informar con claridad:</strong> Explicar qué es el embarazo adolescente, sus causas y consecuencias, usando lenguaje sencillo y sin jergas.</li>
+            <li><strong>Dar a conocer los métodos anticonceptivos:</strong> Dónde conseguirlos, cómo funcionan y cuáles protegen también contra infecciones.</li>
+            <li><strong>Romper mitos:</strong> Desmentir creencias falsas que ponen en riesgo la salud de los jóvenes.</li>
+            <li><strong>Fomentar el diálogo:</strong> Animar a hablar en casa, con amigos y en la escuela sobre sexualidad sin vergüenza.</li>
+            <li><strong>Promover el acceso a servicios:</strong> Informar dónde hay atención médica amigable y gratuita para jóvenes.</li>
+            <li><strong>Empoderar:</strong> Recordar que cada persona tiene derecho a decidir sobre su cuerpo y su vida.</li>
+        </ol>
+    </div>
+
+    <!-- Actividades: Acciones que se realizarán -->
+    <div class="tarjeta">
+        <h3>📢 Actividades que Realizaremos</h3>
+        <ul>
+            <li><strong>Carteles e infografías:</strong> Material visual colocado en espacios visibles de la escuela con información resumida y mensajes positivos.</li>
+            <li><strong>Pláticas con profesionales:</strong> Invitación de personal de salud para responder dudas de forma directa y respetuosa.</li>
+            <li><strong>Distribución de folletos:</strong> Resumen con datos clave, métodos anticonceptivos y lugares de ayuda.</li>
+            <li><strong>Espacios de diálogo:</strong> Encuentros donde podamos compartir inquietudes sin ser juzgados, respetando siempre la confidencialidad.</li>
+            <li><strong>Este sitio web:</strong> Información disponible en cualquier momento para consulta de todos.</li>
+        </ul>
+    </div>
+
+    <!-- Mensajes clave: Frases centrales para compartir -->
+    <div class="tarjeta">
+        <h3>💚 Mensajes Clave</h3>
+        <ul>
+            <li>🔹 Infórmate antes de decidir: el conocimiento te da poder.</li>
+            <li>🔹 Usar protección no te hace menos libre: te hace más responsable.</li>
+            <li>🔹 Preguntar no es de tontos: es de personas que quieren cuidarse.</li>
+            <li>🔹 Tu cuerpo, tu decisión: nadie debe presionarte.</li>
+            <li>🔹 Pedir ayuda es valentía, no debilidad.</li>
+            <li>🔹 Tienes derecho a soñar, estudiar y crecer: tu futuro es lo más valioso.</li>
+        </ul>
+    </div>
+
+    <!-- Lugares de ayuda: Dónde acudir si necesitas apoyo -->
+    <div class="tarjeta destacado">
+        <h3>📞 ¿Dónde buscar ayuda?</h3>
+        <ul>
+            <li>🏥 Centros de salud cercanos — atención gratuita y confidencial</li>
+            <li>📞 Línea de la Vida — escucha y orientación gratuita las 24 horas</li>
+            <li>🏫 Orientadores y orientadoras del CECYTEM</li>
+            <li>💙 Personal médico y enfermería de la institución</li>
+            <li>👨‍👩‍👧‍👦 Familiares de confianza</li>
+        </ul>
+    </div>
+    
+</section>
+<!-- FIN SECCIÓN: CAMPAÑA -->
+
+<!-- ==================================================
+    SECCIÓN: MITOS Y REALIDADES
+    ID: mitos
+    Propósito: Desmentir creencias falsas y reafirmar
+    verdades que empoderan
+================================================== -->
+<section id="mitos" class="pagina">
+    <h2>Mitos y Realidades Grupo 503 💚</h2>
+    
+    <!-- Encabezado de la sección -->
+    <div class="tarjeta destacado">
+        <h3>🌟 MITOS Y REALIDADES</h3>
+        <p style="font-size: 1.4rem; font-style: italic; text-align: center; color: var(--verde-oscuro); margin: 1rem 0;"></p>
+    </div>
+
+    <!-- Mito 1: Creencias sobre a quién le pasa | Realidad: La información protege -->
+    <div class="tarjeta">
+        <h3>❌ Mito: "Solo pasa a quienes no tienen cuidado"</h3>
+        <p>El embarazo adolescente puede ocurrir incluso cuando se cree que se toman precauciones, por falta de información correcta, uso inadecuado de métodos anticonceptivos o creencias equivocadas. No es un castigo ni ocurre solo a ciertas personas; la desinformación afecta a todos y todas.</p>
+    </div>
+    <div class="tarjeta">
+        <h3>✅ Realidad: La información protege tu futuro</h3>
+        <p>Conocer cómo funcionan tu cuerpo, tus derechos y los métodos anticonceptivos confiables te da el poder de elegir cuándo y si quieres formar una familia. Estar bien informad@ reduce riesgos y te permite seguir cumpliendo tus metas personales y profesionales.</p>
+    </div>
+
+    <!-- Mito 2: Sobre retomar estudios | Realidad: Derecho a vivir juventud plena -->
+    <div class="tarjeta">
+        <h3>❌ Mito: "Es fácil interrumpir los estudios y retomarlos después"</h3>
+        <p>En la práctica, combinar la crianza, las responsabilidades del hogar y el estudio es muy difícil. Muchas personas no logran retomar la educación a tiempo, lo que limita sus oportunidades laborales y personales. Prevenir te da más libertad para elegir tu camino.</p>
+    </div>
+    <div class="tarjeta">
+        <h3>✅ Realidad: Tienes derecho a vivir tu juventud plena</h3>
+        <p>Tu etapa de crecimiento, aprendizaje y sueños es valiosa. Planear con tiempo te permite disfrutar, formarte, crecer y construir la vida que deseas, sin prisa ni presiones. Tú decides el ritmo de tu vida.</p>
+    </div>
+
+    <!-- Mito 3: Sobre sentirse sol@ | Realidad: Prevenir es cuidarse -->
+    <div class="tarjeta">
+        <h3>❌ Mito: "Si te pasa, estás sol@"</h3>
+        <p>El estigma y el silencio hacen sentir soledad, pero no tienes que enfrentarlo así. Existen personas, instituciones y espacios de confianza dispuestos a escucharte, orientarte y acompañarte sin juzgarte. Buscar ayuda es un acto de valentía, no de debilidad.</p>
+    </div>
+    <div class="tarjeta">
+        <h3>✅ Realidad: Prevenir es cuidarte</h3>
+        <p>Hablar de salud reproductiva, preguntar, informarte y usar protección no es algo de lo que avergonzarse. Es responsabilidad contigo mism@ y con quienes te rodean. La prevención es la mejor herramienta para que tu futuro sea como tú sueñes.</p>
+    </div> 
+</section>
+<!-- FIN SECCIÓN: MITOS -->
+        <!-- ==================================================
+    SECCIÓN: GALERÍA DE DESARROLLADORES
+    ID: galeria
+    Propósito: Mostrar al equipo del Grupo 503
+    trabajando en el proyecto, con fotografías
+================================================== -->
+<section id="galeria" class="pagina">
+    <h2>Galería de Desarrolladores 💻</h2>
+    
+    <!-- Contenedor principal que agrupa todas las fotos -->
+    <div class="contenedor-galeria">
+        <!-- Foto 1: Trabajo en código | Nota: extensión .jepg.jpeg verificar -->
+        <div class="foto-desarrollador">
+            <img src="1.jpeg" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
+            <span style="position: relative; z-index: 1; background: rgba(255,255,255,0.7); padding: 4px 8px; border-radius: 4px;">Trabajando en el código 💚</span>
+        </div>
+        <!-- Foto 2: Trabajo general del equipo -->
+        <div class="foto-desarrollador">
+            <img src="2.jpeg" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
+            <span style="position: relative; z-index: 1; background: rgba(255,255,255,0.7); padding: 4px 8px; border-radius: 4px;">Trabajando 💚</span>
+        </div>
+        <!-- Foto 3: Captura de pantalla 26/10/2026 -->
+        <div class="foto-desarrollador">
+            <img src="Captura de pantalla 2026-10-26 182721.png" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
+            <span style="position: relative; z-index: 1; background: rgba(255,255,255,0.7); padding: 4px 8px; border-radius: 4px;">Trabajando 💚</span>
+        </div>
+        <!-- Foto 4: Segunda captura de pantalla -->
+        <div class="foto-desarrollador">
+            <img src="Captura de pantalla 2026-10-26 182751.png" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
+            <span style="position: relative; z-index: 1; background: rgba(255,255,255,0.7); padding: 4px 8px; border-radius: 4px;">Trabajando 💚</span>
+        </div>
+        <!-- Foto 5: Imagen de WhatsApp 27/10/2026 (tarde) -->
+        <div class="foto-desarrollador">
+            <img src="WhatsApp Image 2026-10-27 at 3.26.09 PM.jpeg" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
+            <span style="position: relative; z-index: 1; background: rgba(255,255,255,0.7); padding: 4px 8px; border-radius: 4px;">Trabajando 💚</span>
+        </div>
+        <!-- Foto 6: Segunda imagen de WhatsApp -->
+        <div class="foto-desarrollador">
+            <img src="WhatsApp Image 2026-10-27 at 3.26.10 PM.jpeg" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
+            <span style="position: relative; z-index: 1; background: rgba(255,255,255,0.7); padding: 4px 8px; border-radius: 4px;">Trabajando 💚</span>
+        </div>
+        <!-- Foto 7: Imagen de WhatsApp 26/10/2026 (tarde) -->
+        <div class="foto-desarrollador">
+            <img src="WhatsApp Image 2026-10-26 at 6.47.47 PM.jpeg" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
+            <span style="position: relative; z-index: 1; background: rgba(255,255,255,0.7); padding: 4px 8px; border-radius: 4px;">Trabajando 💚</span>
+        </div>
+    </div>
+</section>
+<!-- FIN SECCIÓN: GALERÍA -->
+
+<!-- ==================================================
+    SECCIÓN: CENTROS DE SALUD
+    ID: centro
+    Propósito: Informar ubicación, contacto, horarios
+    y servicios de lugares de atención cercanos (Villa Victoria)
+================================================== -->
+<section id="centro" class="pagina">
+    <h2>CENTROS DE SALUD 💚</h2>
+    
+    <!-- Encabezado destacado -->
+    <div class="tarjeta destacado"> 
+        <h3>📍 Encuéntranos cerca de ti — Villa Victoria</h3> 
+        <p style="font-size: 1.4rem; font-style: italic; text-align: center; color: var(--verde-oscuro); margin: 1rem 0;">"Tu salud no tiene que esperar: conoce dónde acudir."</p>
+    </div>
+
+    <!-- Centro 1: Hospital Municipal Guadalupe Victoria Bicentenario -->
+    <div class="tarjeta">
+        <h3>🏥 Centro de Salud / Hospital Municipal Guadalupe Victoria Bicentenario</h3>
+        <p><strong>Dirección:</strong> Calle Lázaro Cárdenas N°25, Col. Centro, C.P. 50960, Villa Victoria, Estado de México</p> 
+        <p><strong>Teléfono:</strong> 726 251 5202</p> 
+        <p><strong>Horario:</strong> Atención continua las 24 horas, los 7 días de la semana</p> 
+        <p><strong>Servicios:</strong> Consulta general, salud reproductiva, planificación familiar, métodos anticonceptivos, orientación sin discriminación</p> 
+        <!-- Enlace a Google Maps -->
+        <p>🗺️ <a href="https://www.google.com/maps/search/?api=1&query=Hospital+Municipal+Guadalupe+Victoria+Bicentenario+Villa+Victoria+Mexico" target="_blank">Abrir en Google Maps</a></p>
+    </div>
+
+    <!-- Centro 2: UMF No. 243 IMSS Villa Victoria -->
+    <div class="tarjeta"> 
+        <h3>🏥 UMF No. 243 IMSS Villa Victoria</h3> 
+        <p><strong>Dirección:</strong> Av. Lázaro Cárdenas S/N, Barrio de Jesús María, C.P. 50960, Villa Victoria, Estado de México</p> 
+        <p><strong>Teléfono:</strong> 800 681 2525 / 726 251 5236</p> 
+        <p><strong>Horario:</strong> Lunes a Viernes de 08:00 a 20:00 hrs · Sábados y Domingos de 08:00 a 14:00 hrs</p> 
+        <p><strong>Servicios:</strong> Atención médica integral, salud sexual y reproductiva, métodos anticonceptivos, citas programadas</p> 
+        <!-- Enlace a Google Maps -->
+        <p>🗺️ <a href="https://www.google.com/maps/search/?api=1&query=UMF+243+IMSS+Villa+Victoria+Estado+de+Mexico" target="_blank">Abrir en Google Maps</a></p> 
+    </div>
+
+    <!-- Centro 3: Centro Médico Villa Victoria -->
+    <div class="tarjeta"> 
+        <h3>🏥 Centro Médico Villa Victoria</h3> 
+        <p><strong>Dirección:</strong> Calle Lázaro Cárdenas, Manzana 014, Col. Jesús María, C.P. 50986, Villa Victoria, Estado de México</p> 
+        <p><strong>Teléfono:</strong> 726 251 5907</p> 
+        <p><strong>Horario:</strong> Abierto las 24 horas</p> 
+        <p><strong>Servicios:</strong> Atención médica general, orientación, acompañamiento y referencias a especialistas</p> 
+        <!-- Enlace a Google Maps -->
+        <p>🗺️ <a href="https://www.google.com/maps/search/?api=1&query=Centro+Medico+Villa+Victoria+Lazaro+Cardenas+Jesus+Maria" target="_blank">Abrir en Google Maps</a></p> 
+    </div>
+
+    <!-- Bloque: Derechos y recomendaciones -->
+    <div class="tarjeta"> 
+        <h3>💚 Lo que debes saber</h3> 
+        <p>✅ La atención sobre salud reproductiva, métodos anticonceptivos y orientación es <strong>confidencial, gratuita y un derecho tuyo</strong>.</p> 
+        <p>✅ No necesitas autorización de nadie para preguntar, informarte o cuidarte.</p> 
+        <p>✅ Si tienes dudas o necesitas apoyo, acercarte es el primer paso — <strong>no estás sol@</strong>.</p> 
+        <p>📞 En caso de emergencia, marca al <strong>911</strong> o acude directamente al hospital más cercano.</p> 
+    </div>
+</section>
+<!-- FIN SECCIÓN: CENTROS DE SALUD -->
+
+<!-- ==================================================
+    SECCIÓN: CHATBOT / CHAT INFORMATIVO
+    ID: chatbot
+    Propósito: Asistente con preguntas frecuentes
+    precargadas que responde al hacer clic
+================================================== -->
+<section id="chatbot" class="pagina">
+    <h2>Chat Informativo — Embarazo Adolescente 🤝</h2>
+    <p style="text-align: center; margin-bottom: 1rem;">Haz clic en cualquier pregunta y obtén la respuesta 💚</p>
+    
+    <!-- Contenedor visual del chat -->
+    <div class="caja-chat">
+        <!-- Cabecera del asistente -->
+        <div class="cabecera-chat">💚 Chat de Prevención — Grupo 503</div>
+        <!-- Área donde aparecen los mensajes -->
+        <div class="cuerpo-chat" id="cuerpoChat">
+            <div class="mensaje mensaje-bot">¡Hola! Soy tu asistente de información. Pregúntame lo que necesites sobre embarazo adolescente, métodos anticonceptivos y salud reproductiva. Estoy aquí para ayudarte 💚</div>
+        </div>
+        <!-- Botones de preguntas rápidas -->
+        <div class="preguntas-rapidas" id="contenedorPreguntas">
+            <!-- Preguntas cargadas dinámicamente con JavaScript -->
+        </div>
+    </div>
+</section>
+<!-- FIN SECCIÓN: CHATBOT -->
+
+<!-- ==================================================
+    PIE DE PÁGINA
+    Propósito: Identificación institucional y lema
+================================================== -->
+<footer class="pie">
+    <p><strong>CECYTEM — Grupo 503 💚</strong></p>
+    <p style="margin-top: 0.3rem; font-size: 0.9rem;">Proyecto de Prevención del Embarazo Adolescente | Tu futuro es primero, infórmate, cuídate, decide.</p>
+</footer>
+
+<!-- ==================================================
+    SCRIPT: FUNCIONALIDADES DEL SITIO
+    Propósito: Navegación entre secciones y 
+    sistema de respuestas del chatbot
+================================================== -->
+<script>
+    // --------------------------
+    // NAVEGACIÓN ENTRE SECCIONES
+    // Cambia la clase .activa según el enlace seleccionado
+    // --------------------------
+    const enlaces = document.querySelectorAll('.menu-principal a');
+    const paginas = document.querySelectorAll('.pagina');
+
+    enlaces.forEach(enlace => {
+        enlace.addEventListener('click', (e) => {
+            e.preventDefault();
+            const id = enlace.getAttribute('data-pagina');
+            paginas.forEach(p => p.classList.remove('activa'));
+            document.getElementById(id).classList.add('activa');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+
+    // --------------------------
+    // BASE DE DATOS: 60 PREGUNTAS Y RESPUESTAS
+    // Contiene toda la información que el asistente brinda
+    // --------------------------
+    const baseDatos = [
+        { pregunta: "¿Qué pasa si me embarazo a los 16 años?", respuesta: "Embarazarse a los 16 conlleva cambios físicos, emocionales y sociales. Tu cuerpo aún se desarrolla, así que acude al médico de inmediato para control prenatal. Puede afectar estudios y rutina, pero hay apoyos médicos, escolares y familiares. No estás sol@." },
+        { pregunta: "¿Cómo sé si estoy embarazada?", respuesta: "Señales comunes: retraso menstrual, náuseas, sensibilidad en senos, cansancio, ganas frecuentes de orinar. Solo una prueba de embarazo o análisis de sangre confirma con seguridad." },
+        { pregunta: "¿A qué edad es más riesgoso?", respuesta: "Antes de los 19 años se considera mayor riesgo, especialmente antes de los 16. El cuerpo aún madura, aumentando probabilidad de preclampsia, parto prematuro y bajo peso del bebé." },
+        { pregunta: "¿Qué es el embarazo adolescente?", respuesta: "Según la OMS, ocurre entre los 10 y 19 años. Temprano (menores de 15) y tardío (15 a 19)." },
+        { pregunta: "¿Causas principales?", respuesta: "Falta de educación sexual, inicio temprano sin protección, desconocimiento de métodos, presión de pareja, violencia, falta de diálogo familiar." },
+        { pregunta: "¿Consecuencias para la salud?", respuesta: "Mayor riesgo de anemia, hipertensión, parto prematuro, bajo peso del bebé, ansiedad y depresión. El control prenatal reduce riesgos." },
+        { pregunta: "¿Afecta los estudios?", respuesta: "Sí, es causa frecuente de abandono escolar en México. Existen becas y apoyos para continuar. Organización y apoyo familiar son clave." },
+        { pregunta: "¿Qué métodos anticonceptivos hay?", respuesta: "De barrera (condón), hormonales (píldora, inyección, parche, implante), intrauterinos (DIU), de emergencia y naturales. El condón protege contra ITS." },
+        { pregunta: "¿El condón protege de todo?", respuesta: "Protege muy bien contra embarazo y mayoría de ITS. No cubre zonas donde se transmiten herpes o VPH. Usarlo siempre reduce el riesgo." },
+        { pregunta: "¿La píldora siempre funciona?", respuesta: "Tomada a la misma hora: más del 99% efectiva. Si se olvida, baja. No protege contra ITS — combínala con condón." },
+        { pregunta: "¿Qué es la píldora del día después?", respuesta: "Método de emergencia tras relación sin protección. Más efectiva cuanto antes se tome (hasta 72h). No para uso frecuente." },
+        { pregunta: "¿Dónde conseguir métodos gratis?", respuesta: "Centros de salud, IMSS, ISSSTE en México. Hay atención amigable para jóvenes sin autorización de adulto." },
+        { pregunta: "¿Necesito ser mayor de edad?", respuesta: "No. Tienes derecho a información y atención confidencial sin importar tu edad." },
+        { pregunta: "¿Qué hago si no quiero contarle a mi familia?", respuesta: "Acude a centros de salud — te atienden confidencialmente. Si hay riesgo para tu salud, busca apoyo de un profesional." },
+        { pregunta: "¿Duele más el parto siendo joven?", respuesta: "El dolor es similar, pero puede durar más o haber complicaciones. El control prenatal mejora todo." },
+        { pregunta: "¿Puedo seguir estudiando?", respuesta: "¡Claro que sí! La ley protege tu derecho a la educación. Hay becas y facilidades en las escuelas." },
+        { pregunta: "¿Mis derechos si soy menor?", respuesta: "Derecho a salud, educación, protección. Si el embarazo fue por abuso, denuncia y busca ayuda inmediata." },
+        { pregunta: "¿Cómo afecta emocionalmente?", respuesta: "Miedo, incertidumbre, alegría, tristeza — todo es normal. Hablar con alguien de confianza ayuda mucho." },
+        { pregunta: "¿El padre tiene responsabilidad?", respuesta: "Sí, legal y emocionalmente. Debe participar en decisiones y manutención." },
+        { pregunta: "¿Qué es educación sexual?", respuesta: "Aprender sobre cuerpo, reproducción, relaciones, derechos, consentimiento y salud. No es solo sobre embarazo." },
+        { pregunta: "¿Es malo tener relaciones antes de los 18?", respuesta: "No hay edad única, pero sin información y protección hay más riesgo. Debe ser decisión propia con consentimiento y protección." },
+        { pregunta: "¿Qué es el consentimiento?", respuesta: "Decir SÍ libremente. Puedes cambiar de opinión. Si te obligan o presionan, NO es consentimiento y es delito." },
+        { pregunta: "¿Sin protección siempre embaraza?", respuesta: "No siempre, pero el riesgo es alto: ~25% en un año. Una sola relación puede ser suficiente." },
+        { pregunta: "¿La primera vez no embaraza?", respuesta: "¡MITO! Si hay óvulo y esperma, SÍ puede. Usa protección siempre." },
+        { pregunta: "¿Mitos falsos?", respuesta: "Falso: no embaraza si la mujer está arriba, si se retira antes, si se baña después. Solo los métodos confiables protegen." },
+        { pregunta: "¿Retirarse antes protege?", respuesta: "NO. El líquido preseminal ya contiene espermatozoides. Tasa de fallo muy alta." },
+        { pregunta: "¿Cómo hablar con mi familia?", respuesta: "Elige momento tranquilo, di que necesitas apoyo. Muchos quieren ayudar pero no saben cómo empezar." },
+        { pregunta: "¿Dónde buscar ayuda?", respuesta: "Centros de salud, Línea de la Vida, DIF, orientadores escolares, UNICEF." },
+        { pregunta: "¿Qué es control prenatal?", respuesta: "Visitas médicas para revisar tu salud y la del bebé. Entre más temprano empieces, mejor." },
+        { pregunta: "¿Qué comer estando embarazada?", respuesta: "Frutas, verduras, cereales, proteínas, lácteos. Agua abundante. Evitar alcohol, tabaco y comidas crudas." },
+        { pregunta: "¿Puedo trabajar embarazada?", respuesta: "Sí, pero la ley prohíbe trabajos pesados o riesgosos. Tienes derecho a descanso y no discriminación." },
+        { pregunta: "¿Si no quiero continuar el embarazo?", respuesta: "La ley varía por estado en México. Acude a centro de salud para orientación legal y médica." },
+        { pregunta: "¿Qué es fecundación?", respuesta: "Unión de espermatozoide y óvulo. Ocurre en las trompas, luego llega al útero." },
+        { pregunta: "¿Cuánto dura un embarazo?", respuesta: "~40 semanas o 9 meses. Normal entre semana 37 y 42." },
+        { pregunta: "¿Qué es lactancia?", respuesta: "Alimentar al bebé con leche materna. Recomendada solo leche materna los primeros 6 meses." },
+        { pregunta: "¿Cómo afecta a mi futuro?", respuesta: "Decidir cuándo tener hijos permite terminar estudios y crecer. La planificación es herramienta de libertad." },
+        { pregunta: "¿Si me presionan para tener relaciones?", respuesta: "Di NO. Aléjate y cuéntalo. Nadie tiene derecho. Si hay violencia, denuncia." },
+        { pregunta: "¿Los métodos engordan?", respuesta: "MITO. Puede haber retención de líquidos leve, pero no aumento permanente. Consulta cuál te conviene." },
+        { pregunta: "¿Duele el DIU?", respuesta: "Molestia tipo cólico al ponerse, luego pasa. Dura años y es muy efectivo." },
+        { pregunta: "¿El implante es seguro?", respuesta: "Sí, uno de los más seguros. Dura hasta 3 años. Puede cambiar el periodo al inicio." },
+        { pregunta: "¿Puedo usar dos métodos?", respuesta: "¡Sí! Condón + píldora o condón + DIU = doble protección: embarazo e ITS." },
+        { pregunta: "¿Olvidé la píldora, qué hago?", respuesta: "Tómala cuanto antes. Si más de 12 horas, usa condón 7 días más." },
+        { pregunta: "¿Cómo saber si tengo ITS?", respuesta: "Flujo raro, picazón, dolor al orinar, llagas. A veces sin síntomas. Solo pruebas confirman. Usa condón." },
+        { pregunta: "¿Las ITS se curan?", respuesta: "Muchas sí con tratamiento. Otras como VIH se controlan. Detección temprana es clave." },
+        { pregunta: "¿Qué es planificación familiar?", respuesta: "Decidir cuántos hijos y cuándo, con libertad e información. Elegir método y cuidar tu salud." },
+        { pregunta: "¿Tener relaciones siempre duele?", respuesta: "¡NO! Si duele, algo no va bien. Puede ser falta de lubricación, tensión o infección. No lo soportes." },
+        { pregunta: "¿Me siento sol@, qué hago?", respuesta: "Busca familia, amigos, profesionales. Hay líneas gratuitas. No tienes que resolverlo tod@ sol@." },
+        { pregunta: "¿Cómo afecta a mi pareja?", respuesta: "Puede unir o distanciar. Una relación sana apoya. Si empeora, no debes quedarte por el embarazo." },
+        { pregunta: "¿Puedo hacer deporte?", respuesta: "Sí, moderado: caminar, nadar. Evitar deportes de contacto. Consulta al médico." },
+        { pregunta: "¿Alcohol o tabaco dañan?", respuesta: "Sí, gravemente: bajo peso, problemas de desarrollo, parto prematuro. Suspende desde el primer momento." },
+        { pregunta: "¿Medicamentos afectan al bebé?", respuesta: "Algunos sí. No te automediques. Consulta siempre al médico." },
+        { pregunta: "¿Qué es el parto?", respuesta: "Proceso de nacimiento. Puede ser vaginal o por cesárea. Cada experiencia es única." },
+        { pregunta: "¿Depresión posparto?", respuesta: "Tristeza profunda tras dar a luz. No es debilidad, es tratamiento. Pide ayuda." },
+        { pregunta: "¿Puedo retomar estudios después?", respuesta: "¡Sí! Hay programas, becas y horarios flexibles. Tu sueño no se cancela." },
+        { pregunta: "¿Mensaje para otra joven?", respuesta: "No estás sola. Informarte es valentía. Tu vida vale mucho. Un embarazo cambia planes, pero no cancela sueños." },
+        { pregunta: "¿Cómo prevenir en mi comunidad?", respuesta: "Comparte info veraz, escucha sin juzgar, participa en campañas. El cambio empieza al hablar sin miedo." },
+        { pregunta: "¿Me da vergüenza en el médico?", respuesta: "Están para ayudarte, no juzgar. Anota tus dudas antes de ir. Tu salud merece la pena." },
+        { pregunta: "¿Equivocarse es malo?", respuesta: "¡No! Aprender es parte de crecer. Lo importante es pedir ayuda y decidir diferente la siguiente vez." },
+        { pregunta: "¿Dónde info confiable?", respuesta: "Secretaría de Salud, OMS, UNICEF, IMSS. Desconfía de redes sin fuente." },
+        { pregunta: "¿Resumen de todo?", respuesta: "Infórmate, usa protección, pregunta sin miedo, busca apoyo. Tu futuro es lo más valioso. Tú decides 💚" }
+    ];
+
+    // ==================================================
+    // SECCIÓN: CARGA DINÁMICA DE PREGUNTAS
+    // Propósito: Recorrer la base de datos y generar
+    // botones interactivos con cada pregunta disponible
+    // ==================================================
+
+    // Obtener referencias a los elementos del DOM
+    // contenedorPreguntas: zona donde aparecen los botones
+    // cuerpoChat: zona donde se muestran las conversaciones
+    const contenedorPreguntas = document.getElementById('contenedorPreguntas');
+    const cuerpoChat = document.getElementById('cuerpoChat');
+
+    // Recorrer cada elemento almacenado en baseDatos
+    // Por cada pregunta, crear un botón y asignarle evento de clic
+    baseDatos.forEach(item => {
+        // Crear elemento de botón
+        const boton = document.createElement('button');
+        // Asignar clase CSS para estilos
+        boton.className = 'boton-pregunta';
+        // Mostrar el texto de la pregunta en el botón
+        boton.textContent = item.pregunta;
+        // Al hacer clic: llamar función mostrarRespuesta
+        // Enviar como parámetros la pregunta y su respuesta correspondientes
+        boton.addEventListener('click', () => mostrarRespuesta(item.pregunta, item.respuesta));
+        // Agregar el botón al contenedor visual
+        contenedorPreguntas.appendChild(boton);
+    });
+
+    // ==================================================
+    // FUNCIÓN: mostrarRespuesta
+    // Parámetros:
+    //   - pregunta: texto que el usuario seleccionó
+    //   - respuesta: información que se mostrará
+    // Acción: Simular conversación — mensaje del usuario → mensaje del bot
+    // ==================================================
+    function mostrarRespuesta(pregunta, respuesta) {
+        // Crear y agregar mensaje con la pregunta (lado usuario)
+        const msgUsuario = document.createElement('div');
+        msgUsuario.className = 'mensaje mensaje-usuario'; // Estilo visual de usuario
+        msgUsuario.textContent = pregunta;
+        cuerpoChat.appendChild(msgUsuario);
+
+        // Retraso de 600ms para simular que el bot "escribe"
+        setTimeout(() => {
+            // Crear y agregar mensaje con la respuesta (lado bot)
+            const msgBot = document.createElement('div');
+            msgBot.className = 'mensaje mensaje-bot'; // Estilo visual del asistente
+            msgBot.textContent = respuesta;
+            cuerpoChat.appendChild(msgBot);
+            // Desplazar el chat hacia abajo para ver el mensaje nuevo
+            cuerpoChat.scrollTop = cuerpoChat.scrollHeight;
+        }, 600);
+
+        // Desplazar inmediatamente tras el mensaje del usuario
+        cuerpoChat.scrollTop = cuerpoChat.scrollHeight;
+    }
+</script>
+</body>
+</html>
